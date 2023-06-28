@@ -1,10 +1,6 @@
-import mongoose, { Types } from "mongoose";
+import mongoose from "mongoose";
 
 const authorSchema = new mongoose.Schema({
-    id: {
-        type: Types.ObjectId,
-        required: true,
-    },
     name: {
         type: String,
         required: true,
@@ -14,3 +10,5 @@ const authorSchema = new mongoose.Schema({
         required: false,
     },
 });
+
+export const Author = mongoose.model("Author", authorSchema);
