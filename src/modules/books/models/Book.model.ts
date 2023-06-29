@@ -1,4 +1,4 @@
-import mongoose, { Types } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const bookSchema = new mongoose.Schema({
     title: {
@@ -6,7 +6,7 @@ const bookSchema = new mongoose.Schema({
         required: true,
     },
     author: {
-        type: Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "Author",
         required: false,
     },
@@ -31,7 +31,7 @@ const bookSchema = new mongoose.Schema({
         required: false,
     },
     publisher: {
-        type: Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "Publisher",
         required: false,
     },

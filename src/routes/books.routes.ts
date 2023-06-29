@@ -1,15 +1,15 @@
 import { Router } from 'express';
-import BookController from '../modules/books/book.controller';
+import BookController from '../modules/books/books.controller';
 
 const bookRoutes = Router();
 
-bookRoutes.route('/books')
+bookRoutes.route('/')
     .get(BookController.findAll)
     .post(BookController.create)
 
-bookRoutes.route('/:id')
+bookRoutes.route('/:_id')
     .all()
-    .get()
+    .get(BookController.findOne)
     .put()
     .delete()
 
