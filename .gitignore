@@ -8,3 +8,9 @@ dist/
 .env.test.local
 .env.production.local
 .env.local
+
+#vscode config
+.vscode/
+
+#package-lock.json
+package-lock.json
