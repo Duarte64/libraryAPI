@@ -1,7 +1,8 @@
 import multer from 'multer';
-import { Router } from 'express';
-import BookController from '../modules/books/books.controller';
 import paginate from '../middlewares/pagination/paginate.middleware';
+import BookController from '../modules/books/books.controller';
+import { Router } from 'express';
+import { authenticateJwt } from '../modules/auth/middleware/jtwAuth.middleware';
 
 const upload = multer();
 const bookRoutes = Router();
@@ -14,12 +15,10 @@ const bookRoutes = Router();
  */
 bookRoutes.route('/')
     .get(BookController.findAll, paginate)
-    .post(upload.single('cover'), BookController.create)
+    .post(authenticateJwt, upload.single('cover'), BookController.create)
 
 bookRoutes.route('/:_id')
-    .all()
     .get(BookController.findOne)
     .put()
-    .delete()
 
 export default bookRoutes;

@@ -1,7 +1,9 @@
+import './modules/auth/strategy/jwt'
 import cors from "cors";
 import docs from './docs';
 import routes from "./routes";
 import express from "express";
+import passport from "passport";
 import database from "./infra/database/database.connector";
 import swaggerUi from 'swagger-ui-express';
 import errorsHandler from "./middlewares/error/error.middleware";
@@ -12,6 +14,7 @@ database.once("open", () => {
 });
 
 const app = express();
+app.use(passport.initialize());
 app.use(cors());
 routes(app);
 app.use(errorsHandler);

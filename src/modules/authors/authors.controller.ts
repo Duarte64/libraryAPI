@@ -1,7 +1,8 @@
-import { getSignedUrlFromS3, makeUploadToS3 } from "../../infra/aws/services/awsS3.service";
 import getRandomName from "../../common/utils/getRandomName";
 import { Author } from "./models/Author.model";
 import { Request, Response } from "express";
+import { getSignedUrlFromS3, makeUploadToS3 } from "../../infra/aws/services/awsS3.service";
+import { UserRoles } from "../users/models/enum/userRoles.enum";
 
 class AuthorController {
     public static async findAll(req: Request, res: Response) {
@@ -36,32 +37,21 @@ class AuthorController {
         }
     }
 
-    public static async create(req: Request, res: Response) {
+    public static async create(req: any, res: Response) {
         try {
-            const randomName = getRandomName();
-            await makeUploadToS3(randomName, req.file);
-            req.body.profilePicture = randomName;
+            const { role } = req.user ?? {};
+            if (role !== UserRoles.ADMIN) {
+                throw new Error("Permission denied");
+            }
+            if (req.file) {
+                const randomName = getRandomName();
+                await makeUploadToS3(randomName, req.file);
+                req.body.profilePicture = randomName;
+            }
             const author = await Author.create(req.body);
             res.status(201).json(author);
-        } catch (error) {
-            res.status(500).json();
-        }
-    }
-
-    public static async update(req: Request, res: Response) {
-        try {
-            res.status(200).json();
-        } catch (error) {
-            res.status(500).json();
-        }
-    }
-
-    public static async delete(req: Request, res: Response) {
-        try {
-            Author.deleteOne({ _id: req.params.id }).exec();
-            res.status(200).json();
-        } catch (error) {
-            res.status(500).json();
+        } catch (error: any) {
+            res.status(500).json({ message: error.message });
         }
     }
 }

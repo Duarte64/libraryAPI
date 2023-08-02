@@ -1,3 +1,4 @@
+import { UserRoles } from "../users/models/enum/userRoles.enum";
 import { Publisher } from "./models/Publisher.model";
 import { Request, Response } from "express";
 
@@ -26,29 +27,16 @@ class PublisherController {
         }
     }
 
-    public static async create(req: Request, res: Response) {
+    public static async create(req: any, res: Response) {
         try {
+            const { role } = req.user ?? {};
+            if (role !== UserRoles.ADMIN) {
+                throw new Error("Permission denied");
+            }
             const publisher = await Publisher.create(req.body);
             res.status(201).json(publisher);
-        } catch (error) {
-            res.status(500).json();
-        }
-    }
-
-    public static async update(req: Request, res: Response) {
-        try {
-            res.status(200).json();
-        } catch (error) {
-            res.status(500).json();
-        }
-    }
-
-    public static async delete(req: Request, res: Response) {
-        try {
-            Publisher.deleteOne({ _id: req.params.id }).exec();
-            res.status(200).json();
-        } catch (error) {
-            res.status(500).json();
+        } catch (error: any) {
+            res.status(500).json({ message: error.message });
         }
     }
 }

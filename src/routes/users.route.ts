@@ -10,6 +10,7 @@ const userRoutes = Router();
  *   description: Can create and manage all users that can perform actions on the platform
  */
 userRoutes.route('/')
+  .get(UserController.findAll)
   .post(UserController.create)
 
 userRoutes.route('/:_id')
