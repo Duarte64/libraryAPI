@@ -163,16 +163,64 @@ const options = {
           parameters: [
             {
               in: 'formData',
-              name: 'name',
+              name: 'title',
               type: 'string',
-              description: 'The name of the author',
+              description: 'The name of the book',
             },
             {
               in: 'formData',
-              name: 'profilePicture',
-              type: 'file',
-              description: 'The profile picture of the author',
+              name: 'author',
+              type: 'string',
+              description: 'The Object ID of the author',
             },
+            {
+              in: 'formData',
+              name: 'description',
+              type: 'string',
+              description: 'The description of the book',
+            },
+            {
+              in: 'formData',
+              name: 'cover',
+              type: 'file',
+              description: 'The cover image of the book',
+            },
+            {
+              in: 'formData',
+              name: 'pages',
+              type: 'number',
+              description: 'The number of pages of the book',
+            },
+            {
+              in: 'formData',
+              name: 'publisher',
+              type: 'string',
+              description: 'The Object ID of the publisher',
+            },
+            {
+              in: 'formData',
+              name: 'year',
+              type: 'number',
+              description: 'The year of publication of the book',
+            },
+            {
+              in: 'formData',
+              name: 'language',
+              type: 'string',
+              description: 'The language of the book',
+            },
+            {
+              in: 'formData',
+              name: 'quantity',
+              type: 'number',
+              description: 'The quantity of books available',
+            },
+            {
+              in: 'formData',
+              name: 'status',
+              type: 'string',
+              description: 'The status of the book, available or unavailable',
+            }
           ],
           responses: {
             201: {
@@ -267,7 +315,7 @@ const options = {
               content: {
                 'application/json': {
                   schema: {
-                    $ref: '#/components/schemas/Book',
+                    $ref: '#/components/schemas/Publisher',
                   },
                 },
               },

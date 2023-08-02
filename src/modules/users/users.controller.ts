@@ -4,6 +4,15 @@ import { Request, Response } from "express";
 import mongoose from "mongoose";
 
 class UserController {
+    public static async findAll(req: Request, res: Response) {
+        try {
+            const users = await User.find().exec()
+            res.status(200).json(users);
+        } catch (error) {
+            res.status(500).json();
+        }
+    }
+
     public static async findOne(req: Request, res: Response) {
         try {
             const user = await User.findById(req.params._id).exec();

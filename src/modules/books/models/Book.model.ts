@@ -44,7 +44,7 @@ const bookSchema = new mongoose.Schema({
     },
     quantity: {
         type: Number,
-        required: false,
+        required: true,
     },
     status: {
         type: String,

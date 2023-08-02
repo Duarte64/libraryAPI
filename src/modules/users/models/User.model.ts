@@ -1,4 +1,5 @@
 import mongoose from "mongoose"
+import { UserRoles } from "./enum/userRoles.enum";
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -19,6 +20,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: false,
     },
+    role: {
+        type: String,
+        enum : UserRoles,
+        required: true,
+    }
 })
 
 userSchema.set('toJSON', {
